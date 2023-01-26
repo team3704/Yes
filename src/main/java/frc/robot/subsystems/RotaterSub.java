@@ -12,20 +12,16 @@ import frc.robot.RobotContainer;
 public class RotaterSub extends SubsystemBase {
     private static final TalonFX climbMotor = new TalonFX(Constants.idCl_climber);
     // Shooter only for testing things public static PIDController pid = new PIDController(0.00005, 0.0005, 0.000003);
-    public static PIDController pid = new PIDController(0.000015, 0.00002, 0.000002);
+    public static PIDController pid = new PIDController(0.00008, 0, 0);//0.00002, 0.000005);
+    static {
+        pid.setTolerance(0);
+    }
     public static double calculated;
     public double targetPosition = 0;
 
     @Override public void periodic() {
         calculated = pid.calculate(climbMotor.getSelectedSensorPosition(), targetPosition);
-        climbMotor.set(ControlMode.PercentOutput, MathUtil.clamp(calculated / (RobotContainer.getStickZ() * 3 + 1), -1, 1));
-    }
-
-    public static double output = 0;
-
-    public void spin(double output) {
-        RotaterSub.output = output;
-        climbMotor.set(ControlMode.PercentOutput, output);
+        climbMotor.set(ControlMode.PercentOutput, calculated / (RobotContainer.getStickZ() + 2));
     }
 
     public void zero() {climbMotor.setSelectedSensorPosition(0);}

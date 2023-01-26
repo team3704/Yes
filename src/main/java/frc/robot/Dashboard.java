@@ -9,7 +9,6 @@ import static frc.robot.RobotContainer.joystick;
 public class Dashboard {
     public static void initialize() {
         putNumber("Angle", 0);
-        putNumber("Output", 0);
         putNumber("Encoder Reading", 0);
         putNumber("PositionErr", 0);
         putNumber("calculatedOutput", 0);
@@ -20,7 +19,6 @@ public class Dashboard {
                 putNumber("X", joystick.getX());
                 putNumber("Y", -joystick.getY());
                 putNumber("Angle", Math.toDegrees(SpinTestCmd.p));
-                putNumber("Output", RotaterSub.output);
                 putNumber("Encoder Reading", RotaterSub.getReading());
                 putNumber("PositionErr", RotaterSub.pid.getPositionError());
                 putNumber("calculatedOutput", RotaterSub.calculated);

@@ -14,7 +14,7 @@ public class SpinTestCmd extends CommandBase {
 
     public SpinTestCmd(RotaterSub rotater) {
         this.rotater = rotater;
-        RotaterSub.pid.setTolerance(45 * Constants.pidMulti_TESTING);
+        //RotaterSub.pid.setTolerance(45 * Constants.pidMulti_TESTING);
         addRequirements(rotater);
     }
 
