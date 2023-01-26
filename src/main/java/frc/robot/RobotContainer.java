@@ -6,6 +6,7 @@ import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 public class RobotContainer {
@@ -30,14 +31,17 @@ public class RobotContainer {
   }
 
   private void configureBindings() {
-    new JoystickButton(joystick, 7).whileTrue(new ShootCmd(shooter));
-    new JoystickButton(joystick, 1).whileTrue(new ButtonCmd(spinSub, -1));
+    //new JoystickButton(joystick, 7).whileTrue(new ShootCmd(shooter));
+    /*new JoystickButton(joystick, 1).whileTrue(new ButtonCmd(spinSub, -1));
     new JoystickButton(joystick, 3).whileTrue(new ButtonCmd(spinSub, 1000));
     new JoystickButton(joystick, 4).whileTrue(new ButtonCmd(spinSub, 1500));
     new JoystickButton(joystick, 2).whileTrue(new ButtonCmd(spinSub, 0));
     new JoystickButton(joystick, 5).whileTrue(new ButtonCmd(spinSub, 500));
     new JoystickButton(joystick, 11).whileTrue(new ButtonCmd(spinSub, -3));
-    new JoystickButton(joystick, 10).whileTrue(new ButtonCmd(spinSub, -2));
+    new JoystickButton(joystick, 10).whileTrue(new ButtonCmd(spinSub, -2));*/
+    //new JoystickButton(joystick, 6).whileTrue(new FollowTargetCmd(drivetrain));
+    new JoystickButton(joystick, 8).onTrue(Commands.runOnce(() -> LimelightSub.toggleLight()));
+    new JoystickButton(joystick, 9).onTrue(new MusicCmd("yes"));
   }
 
   public void scheduleCmds() {
