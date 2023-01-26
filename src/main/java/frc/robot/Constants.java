@@ -11,8 +11,12 @@ public final class Constants {
     idDT_br = 3,
     idDT_fl = 10,
     idDT_fr = 2,
-    idSh_shooter = 7,
+    idSh_shooter = 12, //7
     idCl_climber = 8;
+  
+  public static final double
+    pidMulti_TESTING = 50;
+    //pidMulti_ARM = 50; otherwise 1
 
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;

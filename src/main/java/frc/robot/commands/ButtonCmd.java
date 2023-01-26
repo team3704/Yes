@@ -1,49 +1,40 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-
-//import static java.lang.System.out;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.Constants;
+import frc.robot.RobotContainer;
+import frc.robot.subsystems.RotaterSub;
 
 public class ButtonCmd extends CommandBase {
-    private int targetAngle;
+    private int targetPosition = 0;
+    private final RotaterSub rotater;
 
-    public ButtonCmd(int angle) {
-        this.targetAngle = angle;
+    public ButtonCmd(RotaterSub rotater, int targetPosition) {
+        this.rotater = rotater;
+        this.targetPosition = (int) (targetPosition * Constants.pidMulti_TESTING);
+        addRequirements(rotater);
     }
     
-    /*@Override
+    @Override
     public void execute() {
-        if(targetAngle == -1) climber.zero();
-        else {
-            double currentAngle = climber.getAngle();
-            if(!targetMet(currentAngle)) {
-                if(currentAngle > targetAngle - 5) {
-                    climber.rotate(-0.2);
-                    out.println(currentAngle + " greater than taget angle " + targetAngle);
-                }
-                if(currentAngle < targetAngle + 5) {
-                    climber.rotate(0.2);
-                    out.println(currentAngle + " less than taget angle " + targetAngle);}
+        if(targetPosition < 0) {
+            switch(targetPosition) {
+                case -1: rotater.zero(); break;
+                case -2: 
+                    SpinTestCmd.manualControl = !SpinTestCmd.manualControl;
+                    if(SpinTestCmd.manualControl)
+                        CommandScheduler.getInstance().schedule(RobotContainer.cmd_spinns);
+                    else CommandScheduler.getInstance().cancel(RobotContainer.cmd_spinns);
+                    return;
+                case -3: System.exit(18313); break;
+                default: System.out.println("Uhm"); break;
             }
+
         }
-    }*/
-
-    //@Override 
-    //public boolean isFinished() {return targetMet(climber.getAngle());}
-
-    /*@Override
-    public void end(boolean interrupted) {
-        if(targetMet(climber.getAngle()) ||
-        !RobotContainer.joystick.getRawButton(3) &&
-        !RobotContainer.joystick.getRawButton(4) &&
-        !RobotContainer.joystick.getRawButton(2) &&
-        !RobotContainer.joystick.getRawButton(5)
-        ) climber.rotate(0);
-    }*/
-
-    public boolean targetMet(double currentAngle) {
-        return
-        (((targetAngle - 5) > 0) ? (currentAngle > (targetAngle - 5)) : (currentAngle > (targetAngle - 5 + 360))) &&
-        (targetAngle + 5 < 360 ? currentAngle < targetAngle + 5 : currentAngle > targetAngle + 5 - 360);
+        else if(!SpinTestCmd.manualControl) rotater.targetPosition = this.targetPosition;
+        RotaterSub.pid.reset();
     }
+    @Override 
+    public boolean isFinished() {return true;}
 }
