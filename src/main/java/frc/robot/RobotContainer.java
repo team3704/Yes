@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 public class RobotContainer {
+  private final LimelightSub limelight = new LimelightSub();
   public static Joystick joystick = new Joystick(Constants.id_stick);
   public static final ShooterSub shooter = new ShooterSub();
   private final DrivetrainSubsystem drivetrain = new DrivetrainSubsystem();
