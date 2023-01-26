@@ -15,6 +15,11 @@ public class LimelightSub extends SubsystemBase {
         ty = table.getEntry("ty"),
         ta = table.getEntry("ta");
 
+    private static boolean lights = true;
+    public static void toggleLight() {
+        table.getEntry("ledMode").setValue((lights = !lights) ? 3 : 1);
+    }
+
     @Override public void periodic() {
         x = tx.getDouble(0.0);
         y = ty.getDouble(0.0);
