@@ -2,20 +2,20 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.DrivetrainSubsystem;
+import frc.robot.subsystems.drivetrain.SquareDrive;
 
 public class AutonDriveCmd extends CommandBase {
-    private final DrivetrainSubsystem driveTrain;
+    private final SquareDrive driveTrain;
     private Timer t = new Timer();
 
-    public AutonDriveCmd(DrivetrainSubsystem driveTrain) {
+    public AutonDriveCmd(SquareDrive driveTrain) {
         this.driveTrain = driveTrain;
         addRequirements(driveTrain);
     }
 
     @Override
     public void initialize() {
-        driveTrain.drive(0, 0.15, 1);
+        driveTrain.arcadeDrive(0, 0.15, 1);
         t.start();
     }
 
@@ -26,6 +26,6 @@ public class AutonDriveCmd extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-        driveTrain.drive(0, 0, 0);
+        driveTrain.arcadeDrive(0, 0, 0);
     }
 }

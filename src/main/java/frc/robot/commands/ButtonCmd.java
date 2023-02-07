@@ -21,7 +21,6 @@ public class ButtonCmd extends CommandBase {
         if(targetPosition < 0) {
             System.out.println(targetPosition);
             switch(targetPosition) {
-                case -1: rotater.zero(); break;
                 case -2: 
                     SpinTestCmd.manualControl = !SpinTestCmd.manualControl;
                     if(SpinTestCmd.manualControl)
@@ -37,7 +36,6 @@ public class ButtonCmd extends CommandBase {
 
         }
         else if(!SpinTestCmd.manualControl) rotater.targetPosition = this.targetPosition;
-        RotaterSub.pid.reset();
     }
     @Override 
     public boolean isFinished() {return true;}
