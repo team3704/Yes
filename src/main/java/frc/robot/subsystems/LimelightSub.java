@@ -17,14 +17,18 @@ public class LimelightSub extends SubsystemBase {
     
     // sets limelight settings to defaults
     static {
-        table.getEntry("ledMode").setValue(3);
+        table.getEntry("ledMode").setValue(1);
         table.getEntry("camMode").setValue(0);
     }
 
     private static boolean lights = true;
     public static void toggleLight() {
         table.getEntry("ledMode").setValue((lights = !lights) ? 3 : 1);
-        table.getKeys().forEach(key -> System.out.println(key));
+    }
+
+    public static void light(boolean lightSetting) {
+        lights = lightSetting;
+        table.getEntry("ledMode").setValue(lightSetting ? 3 : 1);
     }
 
     private static boolean visionProcessing = true;
@@ -36,5 +40,9 @@ public class LimelightSub extends SubsystemBase {
         x = tx.getDouble(0.0);
         y = ty.getDouble(0.0);
         area = ta.getDouble(0.0);
+    }
+
+    public static double getXPercent() {
+        return Math.abs(x / 60) + 0.4;
     }
 }
