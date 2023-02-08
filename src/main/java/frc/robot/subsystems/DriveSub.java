@@ -1,4 +1,4 @@
-package frc.robot.subsystems.drivetrain;
+package frc.robot.subsystems;
 
 import static frc.robot.Constants.*;
 
@@ -8,7 +8,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Coms;
 
-public class SquareDrive extends SubsystemBase {
+public class DriveSub extends SubsystemBase {
     private boolean inverted = false;
     private TalonFX
         m_bl = new TalonFX(idDT_bl),
