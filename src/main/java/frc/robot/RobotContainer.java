@@ -5,10 +5,10 @@ import static edu.wpi.first.math.MathUtil.applyDeadband;
 import frc.robot.Constants.XBoxButtons;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
-import frc.robot.subsystems.drivetrain.SquareDrive;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
@@ -18,12 +18,15 @@ import static java.lang.System.out;
 public class RobotContainer {
   public static boolean joystickControl = false;
   private XboxController xboxController = new XboxController(Constants.id_xbox);
+  @SuppressWarnings("unused")
   private final LimelightSub limelight = new LimelightSub();
   public static Joystick joystick = new Joystick(Constants.id_stick);
   public static final ShooterSub shooter = new ShooterSub();
-  private final SquareDrive drivetrain = new SquareDrive();
+  private final DriveSub drivetrain = new DriveSub();
+  public final ArmSub armSubsystem = new ArmSub();
   private static final RotaterSub spinSub = new RotaterSub();
   public static final SpinTestCmd cmd_spinns = new SpinTestCmd(spinSub);
+  public final ElevatorTestSub elevatorSub = new ElevatorTestSub();
 
   public RobotContainer() {
     configureBindings();
@@ -46,6 +49,7 @@ public class RobotContainer {
 
   private void configureBindings() {
     if(joystick != null) {
+      if(!joystick.isConnected()) {Coms.test = true; return;}
       new JoystickButton(joystick, 5).toggleOnTrue(new FollowTargetCmd(drivetrain));
       new JoystickButton(joystick, 7).onTrue(runOnce(() -> LimelightSub.toggleLight()));
       new JoystickButton(joystick, 6).onTrue(runOnce(() -> LimelightSub.toggleCamMode()));
@@ -53,16 +57,18 @@ public class RobotContainer {
       new JoystickButton(joystick, 8).onTrue(new MusicCmd("notBoring.chrp"));
       new JoystickButton(joystick, 9).onTrue(new MusicCmd("boring.chrp"));
       new JoystickButton(joystick, 1).onTrue(runOnce(() -> drivetrain.invert()));
+
       new JoystickButton(joystick, 11).onTrue(runOnce(() -> {
         Coms.test = !Coms.test;
         out.println("Pico: " + Coms.test);
       }));
+      new JoystickButton(joystick, 4).toggleOnTrue(new ArmCmd(armSubsystem));
     } else if(xboxController != null) {
       System.out.println("XboxButton Mapping");
       new Trigger(() -> {return xboxController.getRawButton(XBoxButtons.X);})
         .onTrue(runOnce(() -> drivetrain.invert()));
+      new Trigger(() -> xboxController.getRawButton(XBoxButtons.Y)).onTrue(new FollowTargetCmd(drivetrain));
       /*new Trigger(null).onTrue();
-      new Trigger(null).onTrue();
       new Trigger(null).onTrue();
       new Trigger(null).onTrue();*/
     }

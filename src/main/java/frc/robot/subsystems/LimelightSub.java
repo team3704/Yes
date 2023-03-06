@@ -43,6 +43,6 @@ public class LimelightSub extends SubsystemBase {
     }
 
     public static double getXPercent() {
-        return Math.abs(x / 60) + 0.4;
+        return Math.abs(x / 60) + 0.35;
     }
 }

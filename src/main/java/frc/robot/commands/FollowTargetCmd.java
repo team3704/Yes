@@ -4,13 +4,13 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 import static frc.robot.subsystems.LimelightSub.*;
 
+import frc.robot.subsystems.DriveSub;
 import frc.robot.subsystems.LimelightSub;
-import frc.robot.subsystems.drivetrain.SquareDrive;
 
 public class FollowTargetCmd extends CommandBase {
-    private final SquareDrive drivetrain;
+    private final DriveSub drivetrain;
 
-    public FollowTargetCmd(SquareDrive drivetrain) {
+    public FollowTargetCmd(DriveSub drivetrain) {
         this.drivetrain = drivetrain;
         addRequirements(drivetrain);
     }
@@ -23,10 +23,11 @@ public class FollowTargetCmd extends CommandBase {
     @Override public void execute() {
         double y = 0;
         if(area == 0) {drivetrain.arcadeDrive(0, 0, 0); return;}
-        if(area < 0.45) y = -0.13;
-        else if(area > 0.75) y = 0.13;
+        if(area < 0.45) y = -0.15;
+        else if(area > 0.75) y = 0.15;
         else y = 0;
-        if(x > 4) drivetrain.arcadeDrive(0.16 * getXPercent(), y, 1);
+        if(drivetrain.inverted) y *= -1;
+        if(x > 4) drivetrain.arcadeDrive(0.15 * getXPercent(), y, 1);
         else if(x < -4) drivetrain.arcadeDrive(-0.16 * getXPercent(), y, 1);
         else drivetrain.arcadeDrive(0, y, 1);
     }

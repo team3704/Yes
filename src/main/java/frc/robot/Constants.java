@@ -9,7 +9,8 @@ public final class Constants {
     idDT_fr = 2,
     idSh_shooter = 7,//12, //7
     idCl_climber = 8,
-    id_xbox = 1;
+    id_xbox = 1,
+    id_Elevator = 6;
   
   public static final double
     pidMulti_TESTING = 50;

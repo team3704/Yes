@@ -1,10 +1,6 @@
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.can.TalonFX;
-
-import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.commands.MusicCmd;
 
 public class RotaterSub extends SubsystemBase {
     //private static final TalonFX climbMotor = new TalonFX(Constants.idCl_climber);

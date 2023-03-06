@@ -16,6 +16,7 @@ public class Coms {
     private static BufferedOutputStream output;
     public static byte[] extData = new byte[3];
     public static boolean test = false;
+
     public static void connect() {
         if(s != null) return;
         new Thread(
@@ -28,7 +29,7 @@ public class Coms {
                     input = new DataInputStream(client.getInputStream());
                     output = new BufferedOutputStream(client.getOutputStream());
                 }
-                catch (IOException e) {e.printStackTrace();}
+                catch (Exception e) {System.out.println("ignored exception"); return;}
                 awaitData();
             }
         ).start();
@@ -36,11 +37,9 @@ public class Coms {
 
     public static void disconnect() {
         try {
-            if(s != null) {
-                s.close(); s = null; out.println("Disconnected");
-                input.close(); input = null;
-                output.close(); output = null;
-            }
+            if(s != null) s.close(); {s = null; out.println("Disconnected");}
+            if(input != null) input.close(); input = null;
+            if(output != null) output.close(); output = null;
             if(client != null) client.close(); client = null;
         } catch (IOException e) {e.printStackTrace();}
     }
@@ -48,11 +47,10 @@ public class Coms {
     public static void awaitData() {
         while(true) {
             try {
-                input.readFully(extData);//.read(buffer, 0, 3);
-                out.println("successfully read " + Arrays.toString(extData));
-            } catch (IOException e) {
-                System.out.println("check");
-                //e.printStackTrace();
+                input.readFully(extData);
+                out.println("recieved: " + Arrays.toString(extData));
+            } catch (Exception e) {
+                out.println("check");
                 disconnect();
                 connect();
                 return;

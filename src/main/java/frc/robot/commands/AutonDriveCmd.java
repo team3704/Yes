@@ -2,13 +2,13 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.drivetrain.SquareDrive;
+import frc.robot.subsystems.DriveSub;
 
 public class AutonDriveCmd extends CommandBase {
-    private final SquareDrive driveTrain;
+    private final DriveSub driveTrain;
     private Timer t = new Timer();
 
-    public AutonDriveCmd(SquareDrive driveTrain) {
+    public AutonDriveCmd(DriveSub driveTrain) {
         this.driveTrain = driveTrain;
         addRequirements(driveTrain);
     }
